@@ -1,12 +1,14 @@
 const express = require('express');
-const signUp=require('../controllers/signUp');
-const login=require('../controllers/login');
+const authenticateToken=require('../middleware/auth');
+const uploadAssignment=require('../controllers/uploadAssignment');
+const getAllAdmins =require('../controllers/getAllAdmins');
+
+const router=express.Router();  //creating router for user
+
+//for user end point  it will call the authenticateToken function from that , token is validated and adds the user.id to req.body
 
 
-const router=express.Router();
+router.post('/upload',authenticateToken,uploadAssignment);
+router.get('/admins',authenticateToken,getAllAdmins);
 
-
-router.post('/register',signUp);
-router.post('/login',login);
-
-module.exports=router;
+module.exports=router;   //exporting router
